@@ -1,0 +1,16 @@
+# List of compilers and flags.
+
+# Default set
+ifeq (PARALLEL,$(findstring PARALLEL,$(OPT)))
+CC       =   mpicc 
+else
+CC       =   mpicc 
+
+ifeq (DEBUG,$(findstring DEBUG,$(OPT)))
+OPTIMIZE =   -g -Wall
+else
+OPTIMIZE = -O3                  # optimization
+endif
+
+GSL_INCL = -I/sw/include
+GSL_LIBS = -L/sw/lib
