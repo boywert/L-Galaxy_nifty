@@ -106,6 +106,7 @@ for timeid in range(len(timesnap)):
     time = timesnap[timeid]
     ofilename = output_folder+"/"+prefix+"."+"%04d.txt"%timeid
     fp = open(ofilename,"w+")
+    print >> fp,"M_sun/h Zsolar"
     zstring = "%.3f" % (time[2])
         #print zstring[len(zstring)-1]
     filename = "%s/%s_%03d.z%s.AHF_halos" % (AHFdir, AHFprefix, time[0], zstring)
