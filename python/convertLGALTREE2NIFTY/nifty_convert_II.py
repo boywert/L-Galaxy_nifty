@@ -138,12 +138,17 @@ for timeid in range(len(timesnap)):
             hid = long(halo[0])
             if hid in halomap:
                 for galid in halomap[hid]:
+                    haloid = hid
                     galaxy = gal[galid]
                     if(galaxy["Type"] == 2):
                         orphan_flag = 1
                     else:
                         orphan_flag = 0
                     lasthaloid = lasthalomap[galid]
+                    if(long(halo[1]) > 0):
+                        haloid = long(halo[1])
+                        lasthaloid = hid
+
                     X = galaxy["Pos"][0]*Mpc2kpc
                     Y = galaxy["Pos"][1]*Mpc2kpc
                     Z = galaxy["Pos"][2]*Mpc2kpc
@@ -239,6 +244,6 @@ for timeid in range(len(timesnap)):
                         K = galaxy['Mag'][5]  
                     else:
                         K = 0.                    
-                    print >> fp,hid,lasthaloid,orphan_flag,X,Y,Z,VX,VY,VZ,Mcold,Mhot,Mstar,Mbh,Z_gas,Z_stars,T_stars,SFR,SFRbulge,Mhot_halo,Mcold_halo,Mejected,M_outflow,Mgas_disk,Mgas_spheroid,Mstar_disk,Mstar_spheroid,M_bh,M_ICstars,M_total,MZhot_halo,MZcold_halo,MZejected,MZ_outflow,MZgas_disk,MZgas_spheroid,MZstars_disk,MZstars_spheroid,MZ_bh,MZ_ICstars,BoverT,r_half,r_half_bulge,r_half_disk,nuv_ext,B_ext,V_ext,g_ext,r_ext,K_ext,nuv,B,V,g,r,K
+                    print >> fp,haloid,lasthaloid,orphan_flag,X,Y,Z,VX,VY,VZ,Mcold,Mhot,Mstar,Mbh,Z_gas,Z_stars,T_stars,SFR,SFRbulge,Mhot_halo,Mcold_halo,Mejected,M_outflow,Mgas_disk,Mgas_spheroid,Mstar_disk,Mstar_spheroid,M_bh,M_ICstars,M_total,MZhot_halo,MZcold_halo,MZejected,MZ_outflow,MZgas_disk,MZgas_spheroid,MZstars_disk,MZstars_spheroid,MZ_bh,MZ_ICstars,BoverT,r_half,r_half_bulge,r_half_disk,nuv_ext,B_ext,V_ext,g_ext,r_ext,K_ext,nuv,B,V,g,r,K
 
     fp.close()
