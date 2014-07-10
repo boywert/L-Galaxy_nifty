@@ -24,9 +24,9 @@ mapping = { '/':'ll', '.':'xx'}
 for k, v in mapping.iteritems():
     configname = configname.replace(k, v) 
 
-print configfile,configname
+// print configfile,configname
 os.system("cp "+configfile+" "+configfolder+"/"+configname+".py")
-config_config = __import__(configname)
+convert_config = __import__(configname)
 #import configname as convert_config
 
 import time as libtime
