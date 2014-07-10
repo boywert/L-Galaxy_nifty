@@ -11,7 +11,7 @@ print "Number of arguments: ", len(sys.argv)
 print "The arguments are: " , str(sys.argv)
 
 configfolder = os.path.dirname(sys.argv[1])
-configfilename = os.path.splitext(sys.argv[1])[0]
+configfilename = os.path.splitext(os.path.basename(sys.argv[1]))[0]
 print configfolder,configfilename
 
 if configfolder == '':
