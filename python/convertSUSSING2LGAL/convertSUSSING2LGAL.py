@@ -18,7 +18,7 @@ if configfolder == '':
     print 'no need to insert'
     sys.path.insert(0,configfolder)
 
-module_desc = imp.find_module(configfilename, configfolder)
+module_desc = imp.find_module(configfilename, configfolder+'/')
 convert_config = imp.load_module(configfilename, *module_desc) 
 #convert_config = __import__(configfilename)
 
