@@ -9,8 +9,8 @@ print "This is the name of the script: ", sys.argv[0]
 print "Number of arguments: ", len(sys.argv)
 print "The arguments are: " , str(sys.argv)
 
-configfolder = os.path.dirname(argv[1])
-configfilename = os.path.basename(argv[1])
+configfolder = os.path.dirname(sys.argv[1])
+configfilename = os.path.basename(sys.argv[1])
 
 print configfolder,configfilename
 exit()
