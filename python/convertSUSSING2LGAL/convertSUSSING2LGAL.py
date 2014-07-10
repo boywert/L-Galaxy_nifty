@@ -65,7 +65,7 @@ FileOut = convert_config.FileOut
 FileOut2 = convert_config.FileOut2
 spin_model = convert_config.spin_model
 
-os.system("mkdir -p "+os.path.dirname(Fileout))
+os.system("mkdir -p "+os.path.dirname(FileOut))
 
 #check for nifty wrong mass definition
 try:
