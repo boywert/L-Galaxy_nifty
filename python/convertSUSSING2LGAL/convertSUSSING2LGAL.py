@@ -24,8 +24,8 @@ for k, v in mapping.iteritems():
     configname = configname.replace(k, v) 
 
 os.system("cp "+configfile+" "+configfolder+"/"+configname+".py")
-
-import configname as convert_config
+config_config = __import__(configname)
+#import configname as convert_config
 
 import time as libtime
 
