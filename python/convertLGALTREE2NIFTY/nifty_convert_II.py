@@ -46,7 +46,7 @@ lgaltree_output = os.path.dirname(config.FileOut)
 def read_galaxies():
 
 
-    folder = config.lgaltree_output
+    folder = lgaltree_output
     
 
     firstfile = 0
