@@ -41,7 +41,7 @@ FileOut = config.FileOut
 FileOut2 = config.FileOut2
 prefix = config.prefix
 output_folder = config.output_folder
-lgaltree_output = config.lgaltree_output
+lgaltree_output = os.path.dirname(config.FileOut)
 
 def read_galaxies():
 
