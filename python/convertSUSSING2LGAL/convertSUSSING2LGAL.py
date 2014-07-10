@@ -4,22 +4,27 @@ import math
 import struct
 import copy
 import sys
-import importlib
+import hashlib
 
 print "This is the name of the script: ", sys.argv[0]
 print "Number of arguments: ", len(sys.argv)
 print "The arguments are: " , str(sys.argv)
 
-configfolder = os.path.dirname(sys.argv[1])
-configfilename = os.path.splitext(os.path.basename(sys.argv[1]))[0]
-print configfolder,configfilename
+configfolder = 'tmp'
+os.system("mkdir -p "+configfolder)
 
 if configfolder == '':
     print 'no need to insert'
     sys.path.insert(0,configfolder)
 
+configname = os.path.abspath(sys.argv[1]) 
+mapping = { '/':'ll', '.':'xx'}
+for k, v in mapping.iteritems():
+    configname = configname.replace(k, v) 
 
-convert_config = importlib.import_module(sys.argv[1],'pkg.mod')
+os.system("cp "+configfile+" "+configfolder+"/"+configname+".py")
+
+import configname as convert_config
 
 import time as libtime
 
