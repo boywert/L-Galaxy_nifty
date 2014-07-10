@@ -13,8 +13,10 @@ configfolder = os.path.dirname(sys.argv[1])
 configfilename = os.path.basename(sys.argv[1])
 
 print configfolder,configfilename
+if configfolder == '':
+    print 'no need to insert'
+    sys.path.insert(0,configfolder)
 exit()
-sys.path.insert(0,configfolder)
 convert_config = __import__(configfilename)
 
 import time as libtime
