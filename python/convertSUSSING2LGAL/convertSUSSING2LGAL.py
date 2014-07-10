@@ -12,7 +12,7 @@ print "The arguments are: " , str(sys.argv)
 configfolder = os.path.dirname(sys.argv[1])
 configfilename = os.path.splitext(sys.argv[1])[0]
 print configfolder,configfilename
-exit()
+
 if configfolder == '':
     print 'no need to insert'
     sys.path.insert(0,configfolder)
@@ -128,14 +128,17 @@ def readAHFascii():
                     halocat[hid]["M_fof"] = halo[43]*Msun2Gadget
                 else:
                     halocat[hid]["M_fof"] = 0.
-
-                
+                massref = {}
+                massref["M_200Mean"] = halocat[hid]["M_200Mean"]
+                massref["M_200Crit"] = halocat[hid]["M_200Crit"]
+                massref["M_TopHat"] = halocat[hid]["M_TopHat"]
+                massref["M_fof"] = halocat[hid]["M_fof"]
 
                 # this is for nifty wrong mass compare // Julian asked me to do it -- Boyd
                 if(convert_config.nifty_forcemass > 0):
-                    halocat[hid]["M_200Mean"] = halocat[hid][convert_config.nifty_forcemass]
-                    halocat[hid]["M_200Crit"] = halocat[hid][convert_config.nifty_forcemass]
-                    halocat[hid]["M_TopHat"] = halocat[hid][convert_config.nifty_forcemass]
+                    halocat[hid]["M_200Mean"] = massref[convert_config.nifty_forcemass]
+                    halocat[hid]["M_200Crit"] = massref[convert_config.nifty_forcemass]
+                    halocat[hid]["M_TopHat"] = massref[convert_config.nifty_forcemass]
                     
                 
                 
