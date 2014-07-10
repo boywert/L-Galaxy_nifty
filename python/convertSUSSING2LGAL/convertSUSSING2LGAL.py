@@ -15,6 +15,7 @@ os.system("mkdir -p "+configfolder)
 
 if configfolder == '':
     print 'no need to insert'
+else:
     sys.path.insert(0,configfolder)
 
 configfile = os.path.abspath(sys.argv[1])
