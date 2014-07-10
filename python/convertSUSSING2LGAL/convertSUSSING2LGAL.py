@@ -362,7 +362,7 @@ def outputtrees(halocat2,fileout,fileout2):
                                     newfulltree[newntrees].append(hids)
                                 fulltree[oldtree] = []
                                 oldmergetonew[oldtree] = newntrees
-                                print "move oldtree:",oldtree,"=>",newntrees
+                                # print "move oldtree:",oldtree,"=>",newntrees
                             else:
                                 srctree = oldmergetonew[oldtree]
                                 reftree = srctree
@@ -372,7 +372,7 @@ def outputtrees(halocat2,fileout,fileout2):
                                 srctree = reftree
                                 for hids in newfulltree[srctree]:
                                     newfulltree[newntrees].append(hids)
-                                print "move newtree:",srctree,"=>",newntrees
+                                # print "move newtree:",srctree,"=>",newntrees
                                 newmergetonew[srctree] = newntrees
                                 newfulltree[srctree] = []
                         else:
