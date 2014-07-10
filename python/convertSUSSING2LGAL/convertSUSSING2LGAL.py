@@ -17,7 +17,8 @@ if configfolder == '':
     print 'no need to insert'
     sys.path.insert(0,configfolder)
 
-configname = os.path.abspath(sys.argv[1]) 
+configfile = os.path.abspath(sys.argv[1])
+configname = configfile
 mapping = { '/':'ll', '.':'xx'}
 for k, v in mapping.iteritems():
     configname = configname.replace(k, v) 
