@@ -10,13 +10,13 @@ print "Number of arguments: ", len(sys.argv)
 print "The arguments are: " , str(sys.argv)
 
 configfolder = os.path.dirname(sys.argv[1])
-configfilename = os.path.basename(sys.argv[1])
-
+configfilename = os.path.splitext("path_to_file")[0]
 print configfolder,configfilename
+exit()
 if configfolder == '':
     print 'no need to insert'
     sys.path.insert(0,configfolder)
-exit()
+
 convert_config = __import__(configfilename)
 
 import time as libtime
