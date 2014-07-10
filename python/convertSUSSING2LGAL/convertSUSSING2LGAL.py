@@ -4,6 +4,7 @@ import math
 import struct
 import copy
 import sys
+import imp
 
 print "This is the name of the script: ", sys.argv[0]
 print "Number of arguments: ", len(sys.argv)
@@ -17,7 +18,9 @@ if configfolder == '':
     print 'no need to insert'
     sys.path.insert(0,configfolder)
 
-convert_config = __import__(configfilename)
+module_desc = imp.find_module(configfilename, configfolder)
+convert_config = imp.load_module(configfilename, *module_desc) 
+#convert_config = __import__(configfilename)
 
 import time as libtime
 
