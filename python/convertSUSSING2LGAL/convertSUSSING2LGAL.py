@@ -19,7 +19,7 @@ if configfolder == '':
     sys.path.insert(0,configfolder)
 
 
-convert_config = importlib.import_module(sys.argv[1])
+convert_config = importlib.import_module(sys.argv[1],'pkg.mod')
 
 import time as libtime
 
