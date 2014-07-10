@@ -19,7 +19,7 @@ if configfolder == '':
 
 configfile = os.path.abspath(sys.argv[1])
 configname = configfile
-mapping = { '/':'ll', '.':'xx'}
+mapping = { '/':'\/', '.':'\.'}
 for k, v in mapping.iteritems():
     configname = configname.replace(k, v) 
 
