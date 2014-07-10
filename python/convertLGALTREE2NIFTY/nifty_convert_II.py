@@ -1,10 +1,14 @@
 import pylab
 import numpy
 import sys
+import os
+
+
+
 sys.path.insert(0, "../")
+
 import read_lgal
 import LGalaxyStruct
-import os
 import config
 import time
 

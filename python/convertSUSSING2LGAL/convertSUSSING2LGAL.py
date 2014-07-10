@@ -3,7 +3,20 @@ import os
 import math
 import struct
 import copy
-import convert_config
+import sys
+
+print "This is the name of the script: ", sys.argv[0]
+print "Number of arguments: ", len(sys.argv)
+print "The arguments are: " , str(sys.argv)
+
+configfolder = os.path.dirname(argv[1])
+configfilename = os.path.basename(argv[1])
+
+print configfolder,configfilename
+exit()
+sys.path.insert(0,configfolder)
+convert_config = __import__(configfilename)
+
 import time as libtime
 
 global SNAPfile
@@ -30,7 +43,7 @@ Msun2kg = 1.989e30
 kg2Msun = 1./Msun2kg
 #change to (Mpc/h) (km/s)^2 / (1e10Msun/h)
 G = G*m2Mpc*m2km**2./(Msun2Gadget*kg2Msun)
-print G
+
 
 AHFdir = convert_config.AHFdir
 AHFprefix = convert_config.AHFprefix
@@ -39,6 +52,18 @@ SNAPfile = convert_config.SNAPfile
 FileOut = convert_config.FileOut
 FileOut2 = convert_config.FileOut2
 spin_model = convert_config.spin_model
+
+#check for nifty wrong mass definition
+try:
+    convert_config.nifty_forcemass
+except NameError:
+    convert_config.nifty_forcemass = 0
+
+#check for nifty wrong mass definition
+try:
+    convert_config.spin_model
+except NameError:
+    convert_config.spin_model = 0
 
 def readAHFascii():
     halocat = {}
@@ -78,8 +103,40 @@ def readAHFascii():
                 halocat[hid]["Redshift"] = time[2];
                 halocat[hid]["UID"] = long(halo[0])
                 halocat[hid]["ID"] = hid
-                halocat[hid]["Mvir"] = halo[3]*Msun2Gadget
-                halocat[hid]["Rvir"] = halo[11]*kpc2Mpc
+                halocat[hid]["Mbound"] = halo[3]*Msun2Gadget
+                halocat[hid]["Rbound"] = halo[11]*kpc2Mpc
+
+                if(halo[44] < 1.0e34):
+                    halocat[hid]["M_200Mean"] = halo[44]*Msun2Gadget
+                else:
+                    halocat[hid]["M_200Mean"] = 0.
+
+                if(halo[45] < 1.0e34):
+                    halocat[hid]["M_200Crit"] = halo[45]*Msun2Gadget
+                else:
+                    halocat[hid]["M_200Crit"] = 0.
+
+                if(halo[46] < 1.0e34):
+                    halocat[hid]["M_TopHat"] =  halo[46]*Msun2Gadget
+                else:
+                    halocat[hid]["M_TopHat"] = 0.
+
+
+                if(halo[43] < 1.0e34):
+                    halocat[hid]["M_fof"] = halo[43]*Msun2Gadget
+                else:
+                    halocat[hid]["M_fof"] = 0.
+
+                
+
+                # this is for nifty wrong mass compare // Julian asked me to do it -- Boyd
+                if(convert_config.nifty_forcemass > 0):
+                    halocat[hid]["M_200Mean"] = halocat[hid][convert_config.nifty_forcemass]
+                    halocat[hid]["M_200Crit"] = halocat[hid][convert_config.nifty_forcemass]
+                    halocat[hid]["M_TopHat"] = halocat[hid][convert_config.nifty_forcemass]
+                    
+                
+                
                 halocat[hid]["Len"] = halo[4]
                 halocat[hid]["Pos"] = (halo[5]*kpc2Mpc,halo[6]*kpc2Mpc,halo[7]*kpc2Mpc)
                 halocat[hid]["Vel"] = (halo[8],halo[9],halo[10])
@@ -92,7 +149,8 @@ def readAHFascii():
                 if(spin_model == 99): # Boyd's stupid model
                     lambda_bullock = 0.02
 
-                
+                halocat[hid]["Mvir"] = halocat[hid]["Mbound"]
+                halocat[hid]["Rvir"] = halocat[hid]["Rbound"]
                 # use Peebles lambdaE definition to find angular momentum
                 #halocat[hid]["Ep"] = halo[38]
                 
@@ -390,11 +448,11 @@ def outputtrees(halocat2,fileout,fileout2):
             fp.write(buffer)
             buffer = struct.pack("i",halo["Len"])
             fp.write(buffer)
-            buffer = struct.pack("f",halo["Mvir"])
+            buffer = struct.pack("f",halo["M_200Mean"])
             fp.write(buffer)
-            buffer = struct.pack("f",halo["Mvir"])
+            buffer = struct.pack("f",halo["M_200Crit"])
             fp.write(buffer)
-            buffer = struct.pack("f",halo["Mvir"])
+            buffer = struct.pack("f",halo["M_TopHat"])
             fp.write(buffer)
             buffer = struct.pack("fff",halo["Pos"][0],halo["Pos"][1],halo["Pos"][2])
             fp.write(buffer)
