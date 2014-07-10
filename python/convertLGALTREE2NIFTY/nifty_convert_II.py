@@ -41,7 +41,7 @@ FileOut = config.FileOut
 FileOut2 = config.FileOut2
 prefix = config.prefix
 output_folder = config.output_folder
-lgaltree_output = config.lgaltree_output
+lgaltree_output = os.path.dirname(config.FileOut)
 
 def read_galaxies():
 
@@ -124,13 +124,13 @@ L_sun = 3.846e26 #W
 L_vega = 40.12*L_sun
 pc2m = 3.08567758e16 #m
 Zsolar = 0.02
-
+Lsolar = -1
 os.system("mkdir -p "+output_folder)
 for timeid in range(len(timesnap)):
     time = timesnap[timeid]
     ofilename = output_folder+"/"+prefix+"."+"%04d.txt"%timeid
     fp = open(ofilename,"w+")
-    print >> fp,"M_sun/h Zsolar"
+    print >> fp, Zsolar, Lsolar, "#we don't use Luminosity any more"
     zstring = "%.3f" % (time[2])
         #print zstring[len(zstring)-1]
     filename = "%s/%s_%03d.z%s.AHF_halos" % (AHFdir, AHFprefix, time[0], zstring)
@@ -184,7 +184,9 @@ for timeid in range(len(timesnap)):
                     Mhot = galaxy["HotGas"]*Gadget2Msun
                     Mstar = (galaxy['DiskMass']+galaxy['BulgeMass']) * Gadget2Msun
                     Mbh = galaxy["BlackHoleMass"]*Gadget2Msun
-                    Z_gas = (galaxy["MetalsColdGas"] + galaxy["MetalsHotGas"]) / (galaxy["ColdGas"] + galaxy["HotGas"])/Zsolar
+                    # use Z_coldgas as Z_gas
+                    Z_gas = (galaxy["MetalsColdGas"]) / (galaxy["ColdGas"])/Zsolar
+                    # Z_gas = (galaxy["MetalsColdGas"] + galaxy["MetalsHotGas"]) / (galaxy["ColdGas"] + galaxy["HotGas"])/Zsolar
 		    if(Mstar > 0.0):
                     	Z_stars = (galaxy["MetalsBulgeMass"] + galaxy["MetalsDiskMass"]) / (galaxy['DiskMass']+galaxy['BulgeMass'])/Zsolar
 		    else:
