@@ -117,8 +117,8 @@ def readAHFascii():
                 halocat[hid]["Redshift"] = time[2];
                 halocat[hid]["UID"] = long(halo[0])
                 halocat[hid]["ID"] = hid
-                halocat[hid]["Mbound"] = halo[3]*Msun2Gadget
-                halocat[hid]["Rbound"] = halo[11]*kpc2Mpc
+                halocat[hid]["M_bound"] = halo[3]*Msun2Gadget
+                halocat[hid]["R_bound"] = halo[11]*kpc2Mpc
 
                 if(halo[44] < 1.0e34):
                     halocat[hid]["M_200Mean"] = halo[44]*Msun2Gadget
@@ -140,12 +140,13 @@ def readAHFascii():
                     halocat[hid]["M_fof"] = halo[43]*Msun2Gadget
                 else:
                     halocat[hid]["M_fof"] = 0.
+
                 massref = {}
                 massref["M_200Mean"] = halocat[hid]["M_200Mean"]
                 massref["M_200Crit"] = halocat[hid]["M_200Crit"]
                 massref["M_TopHat"] = halocat[hid]["M_TopHat"]
                 massref["M_fof"] = halocat[hid]["M_fof"]
-
+                massref["M_bound"] = halocat[hid]["M_bound"]
                 # this is for nifty wrong mass compare // Julian asked me to do it -- Boyd
                 if(convert_config.nifty_forcemass > 0):
                     halocat[hid]["M_200Mean"] = massref[convert_config.nifty_forcemass]
@@ -166,8 +167,11 @@ def readAHFascii():
                 if(spin_model == 99): # Boyd's stupid model
                     lambda_bullock = 0.02
 
-                halocat[hid]["Mvir"] = halocat[hid]["Mbound"]
-                halocat[hid]["Rvir"] = halocat[hid]["Rbound"]
+                # because Boyd defined this way
+                halocat[hid]["Mvir"] = halocat[hid]["M_bound"]
+                halocat[hid]["Rvir"] = halocat[hid]["R_bound"]
+
+
                 # use Peebles lambdaE definition to find angular momentum
                 #halocat[hid]["Ep"] = halo[38]
                 
